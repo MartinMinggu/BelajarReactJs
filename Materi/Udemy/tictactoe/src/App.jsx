@@ -7,9 +7,21 @@ import Logs from './components/Log.jsx'
 function App() {
   const [gameTurns, setGameTurns] = useState([]);
   const [activePlayer, setActivePlayer] = useState('X');
-  function handleSelectBox() {
-    setActivePlayer(player => player === 'X' ? 'O' : 'X');
-    setGameTurns();
+  function handleSelectBox(rowIndex, colIndex) {
+    setActivePlayer((currentActivePlayer) => (currentActivePlayer === 'X' ? 'O' : 'X'));
+    setGameTurns(prevTurns => {
+      let currentPlayer = 'X';
+      if (prevTurns.length > 0 && prevTurns[0].player === 'X') {
+        currentPlayer = 'O';
+      }
+      console.log("=======================================");
+      console.log("currentPlayer: " + currentPlayer);
+      console.log("prevTurns: " + prevTurns);
+      const updateTurns = [{ square: { row: rowIndex, col: colIndex }, player: currentPlayer }, ...prevTurns];
+      console.log("updateTurns: " + updateTurns);
+
+      return updateTurns;
+    });
   }
   return (
     <main>
@@ -20,10 +32,10 @@ function App() {
           <Player initialName={"Player 2"} simbol="O" isActive={activePlayer === 'O'} />
         </ol>
         {/* GAMEBOARDS */}
-        <GameBoard onSelectBox={handleSelectBox} activePlayer={activePlayer} />
+        <GameBoard onSelectBox={handleSelectBox} turns={gameTurns} />
 
       </div>
-      <Logs />
+      <Logs turns={gameTurns} />
     </main>
   )
 }
