@@ -1,0 +1,4 @@
+# Konsep penting react
+1. Component : memecah bagian bagian dari website menjadi bagian kecil yang bertanggung jawab secara khusus, dan dapat digunakan kembali
+    => unit fungsional terkecil yang bertanggung jawab menampilkan ui berdaasrkan data tertentu, Modular, reusable, dapat susun menyusun
+2. 

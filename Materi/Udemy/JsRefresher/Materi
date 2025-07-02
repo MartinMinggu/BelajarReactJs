@@ -1,0 +1,7 @@
+# Javascript dapat diajalankan di berbagai environment
+- di browser
+- di node js 
+
+# import js ke html
+- diantara <script></script>
+- diimpor dari script <script src="script.js"></script>
