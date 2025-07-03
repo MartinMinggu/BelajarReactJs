@@ -3,18 +3,22 @@ import Input from "./Input";
 import { useState } from 'react'
 export default function Main({ handleAnual }) {
     const [form, setForm] = useState({
-        initialInvestment: 0,
-        annualInvestment: 0,
-        expectedReturn: 0,
-        duration: 0
+        initialInvestment: 1500,
+        annualInvestment: 1200,
+        expectedReturn: 6,
+        duration: 10
     });
     function handleInputChange(id, value) {
         setForm(prev => {
             const updatedForm = {
                 ...prev,
-                [id]: value
+                [id]: Number(value)
             }
-            handleAnual(calculateInvestmentResults(updatedForm))
+            console.log("updatedForm" + JSON.stringify(updatedForm));
+            let annualData = calculateInvestmentResults(updatedForm);
+            console.log("annualData" + JSON.stringify(annualData));
+            handleAnual(annualData);
+
             return updatedForm;
         })
     }
