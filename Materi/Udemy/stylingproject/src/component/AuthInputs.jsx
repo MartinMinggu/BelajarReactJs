@@ -1,39 +1,7 @@
 import { useState } from 'react';
-import { styled } from 'styled-components'
 import Button from './Button.jsx';
-import CustomInput from './CustomInput.jsx';
-
-const ControlContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-`;
-
-const Label = styled.label`
-  display: block;
-  margin-bottom: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color:${({ $invalid }) => $invalid ? '#f87171' : '#6b7280'};
-`;
-const Input = styled.input`
-  width: 100%;
-  padding: 0.75rem 1rem;
-  line-height: 1.5;
-  background-color:${({ $invalid }) => $invalid ? '#fed2d2' : '#d1d5db'};
-  color:${({ $invalid }) => $invalid ? '#ef4444' : '#374151'};
-  border: 1px solid ${({ $invalid }) => $invalid ? '#f73f3f' : 'transparent'};
-  border-radius: 0.25rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  &:focus{
-   outline: none;
-    box-shadow: none;
-    border-color: transparent;
-  }
-`;
+import Input from './Input.jsx';
+import ButtonText from './ButtonText.jsx';
 
 export default function AuthInputs() {
     const [enteredEmail, setEnteredEmail] = useState('');
@@ -56,16 +24,17 @@ export default function AuthInputs() {
     const passwordNotValid = submitted && enteredPassword.trim().length < 6;
 
     return (
-        <div id="auth-inputs">
-            <ControlContainer>
-                <CustomInput invalid={emailNotValid} labeltext="email" type="email" onChange={(event) => handleInputChange('email', event.target.value)} />
-                <CustomInput invalid={passwordNotValid} labeltext="password" type="password" $invalid={passwordNotValid} onChange={(event) => handleInputChange('password', event.target.value)} />
-            </ControlContainer>
-            <div className="actions">
-                <button type="button" className="text-button">
-                    Create a new account
-                </button>
-                <Button className='button' onClick={handleLogin}>Sign In</Button>
+        <div className={"w-100 max-w-sm p-8 mx-auto rounded-md bg-gradient-to-b from-[#474232] to-[#28271c] text-white"}>
+            <h6 className="text-center text-xl font-semibold">Login</h6>
+            <div className={"flex flex-col gap-2 mb-6"}>
+                <Input invalid={emailNotValid} labelText="email" type="email" onChange={(event) => handleInputChange('email', event.target.value)} />
+                <Input invalid={passwordNotValid} labelText="password" type="password" $invalid={passwordNotValid} onChange={(event) => handleInputChange('password', event.target.value)} />
+            </div>
+            <div className="flex justify-between gap-4">
+                <ButtonText type="button" onClick={() => alert("Yang Mulia menekan new akun!")}>
+                    Create a new account?
+                </ButtonText>
+                <Button onClick={handleLogin}>Sign In</Button>
             </div>
         </div >
     );

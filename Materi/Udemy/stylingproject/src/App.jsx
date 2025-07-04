@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Header />
-      <main>
+      <main className='p-4'>
         <AuthInputs />
       </main>    </>
   )
