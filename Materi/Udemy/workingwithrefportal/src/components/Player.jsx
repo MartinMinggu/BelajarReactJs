@@ -1,19 +1,22 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function Player({ setPlayerName, playeris }) {
-    const [player, setPlayer] = useState(playeris);
-    function setPlayernama(event) {
-        console.log("aa :" + event.target.value);
-
-        setPlayer(event.target.value)
+    const [isEdit, setIsEdit] = useState(true);
+    const a = useRef();
+    function savePlayerName() {
+        setPlayerName(a.current.value);
+        setIsEdit(false);
+        a.current.value = ''; // MANIPULASI ISI NYA
     }
     return (
         <section id="player">
-            <h2>Welcome unknown entity</h2>
+            <h2>Selamat datang entitas fana:  {playeris} {!isEdit && <span style={{ color: "yellow", fontSize: "10px" }} onClick={() => setIsEdit(true)}>🗡️edit</span>} </h2>
+            {/* {isEdit &&  */}
             <p>
-                <input type="text" onChange={setPlayernama} />
-                <button onClick={() => setPlayerName(player)}>Set Name {player}</button>
+                <input type="text" ref={a} />
+                <button onClick={savePlayerName}>🗃️Save Name</button>
             </p>
+            {/* } */}
         </section>
     );
 }
