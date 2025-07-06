@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Player from "./components/Player";
-import TimerChallenge from "./TimerChallenges";
+import TimerChallenge from "./components/TimerChallenges.jsx";
 
 function App() {
   const [player, setPlayer] = useState("player 1");
