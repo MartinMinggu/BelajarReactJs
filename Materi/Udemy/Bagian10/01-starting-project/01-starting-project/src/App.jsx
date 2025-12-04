@@ -68,16 +68,14 @@ function App() {
   }
   const ctxValue = {
     items: shoppingCart.items,
-    addItemToCart: handleAddItemToCart
+    addItemToCart: handleAddItemToCart,
+    updateCartItemQuantity: handleUpdateCartItemQuantity
   }
 
   return (
     // menggunkana wrapper context seperti ini untuk bsia menggunakan context 
     < CartContext.Provider value={ctxValue}>
-      <Header
-        cart={shoppingCart}
-        onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
-      />
+      <Header />
       {/* <Shop onAddItemToCart={handleAddItemToCart} /> */}
       <Shop >
         {DUMMY_PRODUCTS.map((product) => (
