@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Header from "./Headet";
-import ThemeContextProvider, { ThemeContext } from "./ThemeContextProvider";
+import { ThemeContext } from "./ThemeContextProvider";
 
 function Page() {
   const { theme } = useContext(ThemeContext);
