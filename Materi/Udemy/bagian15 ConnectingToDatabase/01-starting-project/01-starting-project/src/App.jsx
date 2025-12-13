@@ -11,16 +11,18 @@ function App() {
   const selectedPlace = useRef();
 
   const [userPlaces, setUserPlaces] = useState([]);
+  const [isLoadingPlace, setIsLoadingPlace] = useState(false);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const [availablePlaces, setAvailablePlaces] = useState([]);
   useEffect(() => {
+    setIsLoadingPlace(true);
     const api = apiBackend + '/user-places';
-    get(api, (data) => { setUserPlaces(data.places || []) });
-
-
-
+    get(api, (data) => {
+      setUserPlaces(data.places || []);
+      setIsLoadingPlace(false);
+    });
   }, []);
   function handleStartRemovePlace(place) {
     setModalIsOpen(true);
@@ -77,6 +79,8 @@ function App() {
       <main>
         <Places
           title="I'd like to visit ..."
+          isLoading={isLoadingPlace}
+          loadingText="sedang mengambil data"
           fallbackText="Select the places you would like to visit below."
           places={userPlaces}
           onSelectPlace={handleStartRemovePlace}
