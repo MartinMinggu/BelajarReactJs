@@ -19,10 +19,10 @@ app.get('/meals', async (req, res) => {
   // const meals = await fs.readFile('./data/available-meals.json', 'utf8');
   // res.json(JSON.parse(meals));
 
-  setTimeout(async () => {
-    const meals = await fs.readFile('./data/available-meals.json', 'utf8');
-    res.json(JSON.parse(meals));
-  }, 10000); // ⏱️ delay 2 detik
+  // setTimeout(async () => {
+  const meals = await fs.readFile('./data/available-meals.json', 'utf8');
+  res.json(JSON.parse(meals));
+  // }, 10000); // ⏱️ delay 2 detik
 });
 
 app.post('/orders', async (req, res) => {
