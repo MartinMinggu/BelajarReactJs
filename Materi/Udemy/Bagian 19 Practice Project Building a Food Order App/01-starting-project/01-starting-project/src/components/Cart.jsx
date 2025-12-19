@@ -14,9 +14,12 @@ export default function Cart() {
     console.log('essCtx.progress');
     console.log(userProgressCtx.progress);
     console.log(userProgressCtx.progress === 'cart');
+    function handleCloseCart() {
+        userProgressCtx.hideCart();
+    }
 
 
-    return <Modal className="cart" open={userProgressCtx.progress === 'cart'} onclose={() => userProgressCtx.hideCart()}>
+    return <Modal className="cart" open={userProgressCtx.progress === 'cart'} onclose={userProgressCtx.progress === 'cart' ? handleCloseCart : null}>
         <h2>Your Cart</h2>
         <ul>
             {cartCtx.items.map(item => <CartItem key={item.id}{...item} onIncrease={() => cartCtx.incrementItem(item.id)} onDecrease={() => cartCtx.removeItem(item.id)} />)}
@@ -24,8 +27,12 @@ export default function Cart() {
         <p className=" cart-total">{rupiahFormatter.format(usdToIdr(cartTotal))}</p>
         <p className="modal-actions">
             <Button textOnly onClick={() => userProgressCtx.hideCart()}>Close</Button>
-            <Button onClick={() => userProgressCtx.showCheckOut()}>Go To Checkout</Button>
+            {
+                cartCtx.items.length > 0 &&
+                <Button onClick={() => userProgressCtx.showCheckOut()}>Go To Checkout</Button>
+            }
         </p>
 
     </Modal>
+
 }

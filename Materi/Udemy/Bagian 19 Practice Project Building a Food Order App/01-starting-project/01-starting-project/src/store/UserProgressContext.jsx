@@ -15,6 +15,8 @@ export function UserProgressContextProvider({ children }) {
         setUserProgress('');
     }
     function showCheckOut() {
+        console.log('showCheckOut jalan');
+
         setUserProgress('checkout');
     }
     function hideCheckOut() {

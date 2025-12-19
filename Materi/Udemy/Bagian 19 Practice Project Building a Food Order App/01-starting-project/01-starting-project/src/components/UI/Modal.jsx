@@ -9,15 +9,15 @@ export default function Modal({ children, open, onclose, className = '' }) {
         if (open) {
             modal.showModal();
         }
-        return () => {
-            modal.close();
-        }
+        return () => modal.close();
         // if (!open && modal.open) {
         //     modal.close();
         // }
     }, [open]);
     return createPortal(
-        <dialog ref={dialog} className={`modal ${className}`} onClose={onclose}>
+        <dialog ref={dialog} className={`modal ${className}`}
+            onClose={onclose}
+        >
             {children}
-        </dialog>, document.getElementById('modal'));
+        </dialog >, document.getElementById('modal'));
 }
