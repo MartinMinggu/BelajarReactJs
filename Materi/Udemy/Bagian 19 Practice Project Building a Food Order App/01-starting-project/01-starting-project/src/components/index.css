@@ -433,17 +433,3 @@ h1 {
 .modal::backdrop {
   background-color: rgba(0, 0, 0, 0.7);
 }
-
-/* 
-.button:active,
-.text-button:active {
-  transform: translateY(4px);
-  box-shadow: 0 2px 0 #1e40af;
-  background: #1d4ed8;
-} */
-
-
-.text-button:active {
-  color: #b9a66a;
-  background-color: #b9a66a;
-}
