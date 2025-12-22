@@ -12,10 +12,7 @@ export default function Meals() {
             setMeals(data)
             setIsLoading(false);
         }, (data) => {
-
             setIsLoading(false);
-
-
         })
     }, [])
 
