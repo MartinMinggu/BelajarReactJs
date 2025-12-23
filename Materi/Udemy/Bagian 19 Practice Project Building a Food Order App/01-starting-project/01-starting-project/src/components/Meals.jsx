@@ -8,23 +8,8 @@ import Error from "./Error.jsx";
 const requestConfig = {};
 
 export default function Meals() {
-    const { data: meals, isLoading, error } = useHttp(`${apiBackend}/mealss`, requestConfig, []);
-    // const [meals, setMeals] = useState([]);
-    // const [isLoading, setIsLoading] = useState(false);
-    // useEffect(() => {
-    //     setIsLoading(true);
-    //     get(`${apiBackend}/meals`, (data) => {
-    //         setMeals(data)
-    //         setIsLoading(false);
-    //     }, (data) => {
-    //         setIsLoading(false);
-    //     })
-    // }, [])
-    // if (isLoading) {
-    //     return Array.from({ length: 4 }).map((_, i) => (
-    //         <MealItemSkeleton key={i} />
-    //     ))
-    // }
+    const { data: meals, isLoading, error } = useHttp(`${apiBackend}/meals`, requestConfig, []);
+
     if (error) { return <Error title="gagal mengambil data meals" message={error} /> }
 
 
