@@ -6,33 +6,66 @@ import Input from "./Input";
 import Button from "../components/UI/Button";
 import UserProgressContext from "../store/UserProgressContext";
 import { apiBackend, post } from "../common/commonApi";
+import useHttp from "../hooks/useHttp";
+import Error from "./Error";
+const requestConfig = {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+};
 export default function Checkout() {
     const cartCtx = useContext(CartContext);
     const userProgressCtx = useContext(UserProgressContext);
+    const { data, isLoading: isSending, error, sendRequest } = useHttp(`${apiBackend}/orders`, requestConfig,)
+
+
     const cartTotal = cartCtx.items.reduce((total, item) => total + (item.quantity * item.price), 0)
 
     function handleSubmit(event) {
         event.preventDefault();
         const fd = new FormData(event.target);
         const customerData = Object.fromEntries(fd.entries());
-        const order = {
-            customer: customerData,
-            items: cartCtx.items
-        }
-        console.log('data : ', order);
-
-        post(`${apiBackend}/orders`,
-            {
-                order
+        const dataSend = JSON.stringify({
+            order: {
+                customer: customerData,
+                items: cartCtx.items
             }
-            , () => console.log('success Add data'), () => console.log('fail Add data'))
+        })
+        sendRequest(dataSend);
+
+        // post(`${apiBackend}/orders`,
+        //     {
+        //         order
+        //     }
+        //     , () => console.log('success Add data'), () => console.log('fail Add data'))
 
     }
     function handleCloseCheckout() {
         userProgressCtx.hideCheckOut();
     }
-    console.log('userProgressCtx.progress === checkout: ', userProgressCtx.progress === 'checkout');
-    console.log('userProgressCtx.progress : ', userProgressCtx.progress);
+    function handleFinish() {
+        userProgressCtx.hideCheckOut();
+        cartCtx.clearAll();
+    }
+
+
+    let userAction = <>
+        <Button textOnly onClick={handleCloseCheckout}>Close</Button>
+        <Button>Submit Order</Button></>
+    if (isSending) {
+        userAction = <span>data sedang disimpan...</span>
+    }
+    if (data && !error) {
+        return <Modal open={userProgressCtx.progress === 'checkout'} onclose={handleCloseCheckout}>
+            <h2>Berhasil!</h2>
+            <p>Your order was submitted successfully. </p>
+            <p>kami akan mengiirmkan email dalama beberapa menit</p>
+            <p className="modal-actions">
+                <Button textOnly onClick={handleFinish}>Okay</Button>
+            </p>
+        </Modal>
+    }
 
     return <Modal open={userProgressCtx.progress === 'checkout'} onclose={handleCloseCheckout} >
         <form onSubmit={handleSubmit}>
@@ -45,9 +78,8 @@ export default function Checkout() {
                 <Input id="postal-code" title="Postal Kode" type="text" required />
                 <Input id="city" title="City" type="text" required />
             </div>
-            <p className="modal-actions">
-                <Button textOnly onClick={handleCloseCheckout}>Close</Button>
-                <Button>Submit Order</Button>
+            {error && <Error title="gagal melakukan submit data..." message={error} />}
+            <p className="modal-actions">{userAction}
             </p>
         </form>
     </ Modal>;

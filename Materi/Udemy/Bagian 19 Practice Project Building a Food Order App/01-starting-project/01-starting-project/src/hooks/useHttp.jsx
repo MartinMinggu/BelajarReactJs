@@ -13,10 +13,10 @@ export default function useHttp(url, config, initialData) {
 
 
     // Menangani permintaan berdasarkan status permintaan
-    const sendRequest = useCallback(async function sendRequest() {
+    const sendRequest = useCallback(async function sendRequest(data) {
         setIsLoading(true);
         try {
-            const resData = await sendHttpRequest(url, config);
+            const resData = await sendHttpRequest(url, { ...config, body: data });
             setData(resData);
         } catch (error) {
             setError(error.message || 'Ada yang salah, gagal mengirimkan permintaan.')
