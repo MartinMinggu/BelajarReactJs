@@ -6,8 +6,8 @@ async function sendHttpRequest(url, config) {
     if (!response.ok) throw new Error(resData.message || 'Ada yang salah, gagal mengirimkan request.')
     return resData;
 }
-export default function useHttp(url, config) {
-    const [data, setData] = useState();
+export default function useHttp(url, config, initialData) {
+    const [data, setData] = useState(initialData);
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -24,7 +24,7 @@ export default function useHttp(url, config) {
         setIsLoading(false);
     }, [url, config]);
     useEffect(() => {
-        if (config && config.method === 'GET') {
+        if ((config && (config.method === 'GET' || !config.method)) || !config) {
             sendRequest();
         }
     }, [sendRequest, config])
