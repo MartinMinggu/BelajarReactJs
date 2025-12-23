@@ -10,11 +10,17 @@ export default function useHttp(url, config, initialData) {
     const [data, setData] = useState(initialData);
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(false);
+    function clearData() {
+        setData(initialData);
+        setError(null);
+        setIsLoading(false);
+    }
 
 
     // Menangani permintaan berdasarkan status permintaan
     const sendRequest = useCallback(async function sendRequest(data) {
         setIsLoading(true);
+        setError(null);
         try {
             const resData = await sendHttpRequest(url, { ...config, body: data });
             setData(resData);
@@ -32,7 +38,8 @@ export default function useHttp(url, config, initialData) {
         data,
         isLoading,
         error,
-        sendRequest
+        sendRequest,
+        clearData
     }
 
 }

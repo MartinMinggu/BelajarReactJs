@@ -52,7 +52,7 @@ function cartReducer(state, action) {
         } else {
             updatedItems[existingIndex] = {
                 ...existingItem,
-                quantity: existingItem.quantity - 1 // Kurangi jumlah
+                quantity: existingItem.quantity - 1 // Kurangi  jumlah
             };
         }
         return { ...state, items: updatedItems };
