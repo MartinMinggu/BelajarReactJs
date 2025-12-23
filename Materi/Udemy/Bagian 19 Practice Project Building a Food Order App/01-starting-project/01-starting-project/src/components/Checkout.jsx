@@ -17,12 +17,12 @@ const requestConfig = {
 export default function Checkout() {
     const cartCtx = useContext(CartContext);
     const userProgressCtx = useContext(UserProgressContext);
-    const { data, isLoading: isSending, error, sendRequest } = useHttp(`${apiBackend}/orders`, requestConfig,)
+    const { data, isLoading: isSending, error, sendRequest, clearData } = useHttp(`${apiBackend}/orders`, requestConfig,)
 
 
     const cartTotal = cartCtx.items.reduce((total, item) => total + (item.quantity * item.price), 0)
 
-    function handleSubmit(event) {
+    async function checkoutAction(event) {
         event.preventDefault();
         const fd = new FormData(event.target);
         const customerData = Object.fromEntries(fd.entries());
@@ -32,14 +32,7 @@ export default function Checkout() {
                 items: cartCtx.items
             }
         })
-        sendRequest(dataSend);
-
-        // post(`${apiBackend}/orders`,
-        //     {
-        //         order
-        //     }
-        //     , () => console.log('success Add data'), () => console.log('fail Add data'))
-
+        await sendRequest(dataSend);
     }
     function handleCloseCheckout() {
         userProgressCtx.hideCheckOut();
@@ -47,6 +40,7 @@ export default function Checkout() {
     function handleFinish() {
         userProgressCtx.hideCheckOut();
         cartCtx.clearAll();
+        clearData();
     }
 
 
@@ -68,7 +62,7 @@ export default function Checkout() {
     }
 
     return <Modal open={userProgressCtx.progress === 'checkout'} onclose={handleCloseCheckout} >
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={checkoutAction}>
             <h2>Checkout</h2>
             <p>Total Amount : {rupiahFormatter.format(usdToIdr(cartTotal))}</p>
             <Input id="name" title="Full Name" required type="text" />
