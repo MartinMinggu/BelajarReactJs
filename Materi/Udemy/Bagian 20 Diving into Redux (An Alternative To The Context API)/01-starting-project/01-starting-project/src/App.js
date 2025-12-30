@@ -1,16 +1,23 @@
 import Counter from './components/Counter';
 import Auth from './components/Auth'
 import Header from './components/Header'
-import { Provider } from 'react-redux';
-import store from './store/indexToolkit';
+import { useSelector } from 'react-redux';
+import UserProfile from './components/UserProfile';
 
 function App() {
+  const { isAuthentication } = useSelector(state => state.login)
+  console.log(isAuthentication);
+
   return (
-    <Provider store={store}>
+    <>
       <Header />
-      <Auth />
+      {
+        isAuthentication ?
+          <UserProfile /> :
+          <Auth />
+      }
       <Counter />
-    </Provider>
+    </>
   );
 }
 
