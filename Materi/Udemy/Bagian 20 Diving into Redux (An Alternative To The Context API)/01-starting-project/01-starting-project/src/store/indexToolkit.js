@@ -1,44 +1,10 @@
-import { createSlice, configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 
 import { loginReducer } from './loginStore.js'
-const initialState = { counter: 0, inputMode: true }
-
-const CounterSlice = createSlice({
-    name: 'counter',
-    initialState,
-    reducers: {
-        increment(state) {
-            state.counter++;
-        },
-        decrement(state) {
-            state.counter--;
-        },
-        decrease(state, action) {
-            state.counter = state.counter - Number(action.payload)
-        },
-        increase(state, action) {
-            state.counter = state.counter + Number(action.payload)
-        },
-        toggle(state) {
-            state.inputMode = !state.inputMode
-        }
-    }
-})
-export const counterActions = CounterSlice.actions;
+import { counterReducer } from './counterStore.js';
 
 const store = configureStore({
-    // reducer: { counter: CounterSlice.reducer }
-    reducer: { counter: CounterSlice.reducer, login: loginReducer }
+    reducer: { counter: counterReducer, login: loginReducer }
 });
 
 export default store;
-
-// const store = configureStore({
-//     // reducer: { counter: CounterSlice.reducer }
-//     reducer: CounterSlice.reducer
-// });
-
-// export default store;
-
-
-

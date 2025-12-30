@@ -7,3 +7,10 @@
   text-align: center;
   background-color: #f4f0fa;
 }
+
+.username {
+  padding: 0 8px;
+  border-radius: 6px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}

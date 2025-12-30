@@ -4,10 +4,19 @@ import { loginActions } from '../store/loginStore';
 
 const Auth = () => {
   const dispatch = useDispatch()
+  const handleLogin = (event) => {
+    event.preventDefault();
+    console.log('event.target :', event.target);
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    console.log(email, password);
+
+    dispatch(loginActions.login({ email, password }))
+  }
   return (
     <main className={classes.auth}>
       <section>
-        <form>
+        <form onSubmit={handleLogin}>
           <div className={classes.control}>
             <label htmlFor='email'>Email</label>
             <input type='email' id='email' />
@@ -16,7 +25,7 @@ const Auth = () => {
             <label htmlFor='password'>Password</label>
             <input type='password' id='password' />
           </div>
-          <button onClick={() => dispatch(loginActions.login())}>Login</button>
+          <button>Login</button>
         </form>
       </section>
     </main>
