@@ -1,11 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux'
 import classes from './Counter.module.css';
-import { useRef, useState } from 'react';
-
+import { useRef } from 'react';
+import { counterActions } from '../store/indexToolkit'
 const Counter = () => {
-  const counter = useSelector(state => state.counter);
-  const inputMode = useSelector(state => state.inputMode);
-  // const [inputMode, setInputMode] = useState(false);
+  const { counter, inputMode } = useSelector(state => state.counter);
+  // const inputMode = useSelector(state => state.inputMode);
   const dispatch = useDispatch();
   const input = useRef();
 
@@ -16,19 +15,19 @@ const Counter = () => {
       <div className={classes.value}>{counter}</div>
       {inputMode ?
         <div>
-          <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
-          <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+          <button onClick={() => dispatch(counterActions.decrement())}>-</button>
+          <button onClick={() => dispatch(counterActions.increment())}>+</button>
         </div>
         :
         <div>
           <input ref={input} defaultValue={5} />
           <div>
-            <button onClick={() => dispatch({ type: 'decrease', amount: input.current.value })}>-</button>
-            <button onClick={() => dispatch({ type: 'increase', amount: input.current.value })}>+</button>
+            <button onClick={() => dispatch(counterActions.decrease(input.current.value))}>-</button>
+            <button onClick={() => dispatch(counterActions.increase(input.current.value))}>+</button>
           </div>
         </div>}
       {/* <button onClick={() => setInputMode(prevMode => !prevMode)}>Toggle Counter</button> */}
-      <button onClick={() => dispatch({ type: 'toggle' })}>Toggle Counter</button>
+      <button onClick={() => dispatch(counterActions.toggle())}>Toggle Counter</button>
     </main>
   );
 };
